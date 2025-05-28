@@ -95,6 +95,13 @@ a {
   color: #f5a623;
 }
 
+a i {
+  margin-right: 6px;
+  vertical-align: middle;
+  color: #f5a623; /* Instagram renk tonlarına uyumlu olabilir */
+}
+
+
 .whatsapp {
   position: fixed;
   bottom: 20px;
