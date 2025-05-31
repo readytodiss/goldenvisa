@@ -64,12 +64,28 @@
     <img src="logo.png" alt="Golden Visa Logo">
   </header>
 
-  <nav>
+<nav>
     <a href="#hakkimizda">Hakkımızda</a>
     <a href="#hizmetler">Hizmetler</a>
     <a href="#sikca">SSS</a>
     <a href="#iletisim">İletişim</a>
-  </nav>
+</nav>
+
+  
+ <div class="slider-wrapper">
+  <div class="slider-container" id="slider">
+    <div class="slide"><img src="11.png" alt="Slider 1"></div>
+    <div class="slide"><img src="12.png" alt="Slider 2"></div>
+    <div class="slide"><img src="13.png" alt="Slider 3"></div>
+    <div class="slide"><img src="14.png" alt="Slider 4"></div>
+  </div>
+
+  <!-- Noktalar -->
+  <div class="slider-dots" id="sliderDots"></div>
+ </div>
+
+
+  
 
   <main>
     <section id="hakkimizda">
@@ -179,6 +195,50 @@
   <a class="whatsapp" href="https://wa.me/905313851803" target="_blank">
     <img class="whatsapp-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> WhatsApp
   </a>
+
+  
+  <script>
+  const slider = document.getElementById("slider");
+  const slides = slider.children;
+  const totalSlides = slides.length;
+  let index = 0;
+
+  // Nokta göstergeleri oluştur
+  const dotsContainer = document.getElementById("sliderDots");
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement("button");
+    dot.addEventListener("click", () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  const dots = dotsContainer.children;
+  dots[0].classList.add("active");
+
+  function updateDots() {
+    Array.from(dots).forEach(dot => dot.classList.remove("active"));
+    dots[index].classList.add("active");
+  }
+
+  function goToSlide(i) {
+    index = i;
+    slider.scrollTo({
+      left: index * slider.clientWidth,
+      behavior: 'smooth'
+    });
+    updateDots();
+  }
+
+
+  // Otomatik geçiş (her 5 saniyede)
+  setInterval(() => {
+    index = (index + 1) % totalSlides;
+    goToSlide(index);
+  }, 5000);
+ </script>
+
+
+
+  
 
   <footer>
     &copy; 2025 Golden Visa. Tüm hakları saklıdır.
