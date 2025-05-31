@@ -196,18 +196,22 @@
     <img class="whatsapp-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> WhatsApp
   </a>
 
-  
   <script>
   const slider = document.getElementById("slider");
   const slides = slider.children;
   const totalSlides = slides.length;
   let index = 0;
+  const intervalDuration = 5000;
+  let autoTimer;
 
-  // Nokta göstergeleri oluştur
+  // Noktalar
   const dotsContainer = document.getElementById("sliderDots");
   for (let i = 0; i < totalSlides; i++) {
     const dot = document.createElement("button");
-    dot.addEventListener("click", () => goToSlide(i));
+    dot.addEventListener("click", () => {
+      goToSlide(i);
+      resetAutoSlide(); // dot ile geçince de reset
+    });
     dotsContainer.appendChild(dot);
   }
 
@@ -228,13 +232,34 @@
     updateDots();
   }
 
+  function startAutoSlide() {
+    autoTimer = setTimeout(() => {
+      index = (index + 1) % totalSlides;
+      goToSlide(index);
+      startAutoSlide(); // tekrar başlat
+    }, intervalDuration);
+  }
 
-  // Otomatik geçiş (her 5 saniyede)
-  setInterval(() => {
-    index = (index + 1) % totalSlides;
-    goToSlide(index);
-  }, 5000);
+  function resetAutoSlide() {
+    clearTimeout(autoTimer);
+    startAutoSlide();
+  }
+
+  // Kullanıcı scroll ettiğinde index'i güncelle ve timer'ı sıfırla
+  slider.addEventListener('scroll', () => {
+    const newIndex = Math.round(slider.scrollLeft / slider.clientWidth);
+    if (newIndex !== index) {
+      index = newIndex;
+      updateDots();
+      resetAutoSlide();
+    }
+  });
+
+  // Başlat
+  startAutoSlide();
  </script>
+
+  
 
 
 
